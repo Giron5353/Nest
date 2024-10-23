@@ -1,14 +1,29 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { BootcampController } from './controllers/bootcamp.controller';
-import { UsersController } from './controllers/users.controller';
-import { CoursesController } from './controllers/courses.controller';
-import { ReviewsController } from './controllers/reviews.controller';
+import { BootcampsModule } from './bootcamps/bootcamps.module';
+import { CoursesModule } from './courses/courses.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 
 @Module({
-  imports: [],
-  controllers: [AppController, BootcampController, UsersController, CoursesController, ReviewsController],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'bootcamps_2902093',
+      entities: [],
+      synchronize: true,
+      autoLoadEntities: true
+    }),
+    BootcampsModule, CoursesModule, ReviewsModule, UsersModule
+  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -5,7 +5,22 @@ meta {
 }
 
 post {
-  url: http://localhost:3000/bootcamp
-  body: none
+  url: http://localhost:3000/bootcamps
+  body: json
   auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Web",
+    "phone": "7456564534",
+    "address": "calle pj",
+    "topics": "web av",
+    "averageRating": 23,
+    "createAt": "2024-10-23"
+  }
 }

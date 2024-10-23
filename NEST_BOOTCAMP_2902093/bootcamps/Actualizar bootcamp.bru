@@ -4,8 +4,14 @@ meta {
   seq: 4
 }
 
-put {
-  url: http://localhost:3000/bootcamp/3
-  body: none
+patch {
+  url: http://localhost:3000/bootcamps/2
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "name":"JS Websocket"
+  }
 }
