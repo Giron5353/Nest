@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+
+import { Review } from './entities/review.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ReviewsService {
-  create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
+  constructor(@InjectRepository(Review) private ReviewRepositor:Repository<Review>){
+
+  }
+
+  create(payload: any) {
+    //crear una instancia de una entity bootcamp
+    const newCourse = this.ReviewRepositor.create(payload)
+
+    //grabar esa instancia y retornarla 
+    return this.ReviewRepositor.save(newCourse);
+
   }
 
   findAll() {
-    return `This action returns all reviews`;
+    return this.ReviewRepositor.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} review`;
+    return this.ReviewRepositor.findOneBy({id});
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  update(id: number, payload: any) {
+    return this.ReviewRepositor.update(+id,payload)
   }
 
   remove(id: number) {
-    return `This action removes a #${id} review`;
+    return this.ReviewRepositor.delete({id});
   }
 }

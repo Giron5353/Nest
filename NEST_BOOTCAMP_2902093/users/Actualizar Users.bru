@@ -5,7 +5,14 @@ meta {
 }
 
 patch {
-  url: http://localhost:3000/users/3
-  body: none
+  url: http://localhost:3000/users/2
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "email":"jose@gmail.com"
+  } 
+  
 }

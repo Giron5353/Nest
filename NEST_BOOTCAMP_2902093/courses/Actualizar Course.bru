@@ -5,7 +5,13 @@ meta {
 }
 
 patch {
-  url: http://localhost:3000/courses/3
-  body: none
+  url: http://localhost:3000/courses/2
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "title":"JS Websocket"
+  }
 }

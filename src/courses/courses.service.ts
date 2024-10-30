@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
+
+import { Course } from './entities/course.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CoursesService {
-  create(createCourseDto: CreateCourseDto) {
-    return 'This action adds a new course';
+  constructor(@InjectRepository(Course) private CourseRepositor:Repository<Course>){
+
+  }
+
+  create(payload: any) {
+    //crear una instancia de una entity bootcamp
+    const newCourse = this.CourseRepositor.create(payload)
+
+    //grabar esa instancia y retornarla 
+    return this.CourseRepositor.save(newCourse);
+
   }
 
   findAll() {
-    return `This action returns all courses`;
+    return this.CourseRepositor.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} course`;
+    return this.CourseRepositor.findOneBy({id});
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  update(id: number, payload: any) {
+    return this.CourseRepositor.update(id,payload);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} course`;
+    return this.CourseRepositor.delete({id});
   }
 }

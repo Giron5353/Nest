@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBootcampDto } from './dto/create-bootcamp.dto';
-import { UpdateBootcampDto } from './dto/update-bootcamp.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Bootcamp } from './entities/bootcamp.entity';
@@ -14,8 +13,13 @@ export class BootcampsService {
 
   }
 
-  create(createBootcampDto: CreateBootcampDto) {
-    return this.bootcampRepositor.createQueryBuilder();
+  create(payload: CreateBootcampDto) {
+    //crear una instancia de una entity bootcamp
+    const newBootcamp = this.bootcampRepositor.create(payload)
+
+    //grabar esa instancia y retornarla 
+    return this.bootcampRepositor.save(newBootcamp);
+
   }
 
   findAll() {
@@ -26,8 +30,9 @@ export class BootcampsService {
     return this.bootcampRepositor.findOneBy({id});
   }
 
-  update(id: number, updateBootcampDto: UpdateBootcampDto) {
-    return this.bootcampRepositor.save({id})
+  update(id: number, payload: any) {
+    // const updateBootcamps
+    return this.bootcampRepositor.update(id,payload)
   }
 
   remove(id: number) {

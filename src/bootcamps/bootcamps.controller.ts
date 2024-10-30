@@ -1,17 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe ,UsePipes} from '@nestjs/common';
 import { BootcampsService } from './bootcamps.service';
 import { CreateBootcampDto } from './dto/create-bootcamp.dto';
-import { UpdateBootcampDto } from './dto/update-bootcamp.dto';
-
 @Controller('bootcamps')
+@UsePipes(new ValidationPipe({whitelist:true, forbidNonWhitelisted:true}))
 export class BootcampsController {
   constructor(private readonly bootcampsService: BootcampsService) {}
 
   @Post()
-  create(@Body() payload: any) {
+  create(@Body() payload: CreateBootcampDto) {
     //payload:sinonimo del body de la request
     //create, update
-    return payload;
+    return this.bootcampsService.create(payload);
   }
 
   @Get()
@@ -26,10 +25,7 @@ export class BootcampsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() payload: any) {
-    return {
-      id,
-      payload
-    }
+    return this.bootcampsService.update(+id,payload)
   }
 
   @Delete(':id')
